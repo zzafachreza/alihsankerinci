@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View, Image, FlatList } from 'react-native'
+import { Alert, StyleSheet, Text, View, Image, FlatList, ActivityIndicator } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { apiURL, getData, storeData } from '../../utils/localStorage';
@@ -21,6 +21,7 @@ export default function SCek({ navigation, route }) {
     const [data, setData] = useState([]);
     const [anggota, setAnggota] = useState([]);
     const ref = useRef();
+    const [open, setOpen] = useState(false);
 
     const isFocused = useIsFocused();
     useEffect(() => {
@@ -36,7 +37,8 @@ export default function SCek({ navigation, route }) {
         axios.post(apiURL + '1data_hadir.php', {
             fid_acara: route.params.id_acara
         }).then(res => {
-            console.log(res.data);
+            setOpen(true);
+            console.log('daftar anggota', res.data);
             setAnggota(res.data);
         })
     }
@@ -79,7 +81,16 @@ export default function SCek({ navigation, route }) {
                     }
                 }} />
             </View>
-            <ScrollView style={{
+
+            {!open && <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                <ActivityIndicator size="large" color={colors.primary} />
+            </View>}
+
+            {open && <ScrollView style={{
                 flex: 1,
             }}>
                 {anggota.map(i => {
@@ -137,7 +148,7 @@ export default function SCek({ navigation, route }) {
                         </View>
                     )
                 })}
-            </ScrollView>
+            </ScrollView>}
 
 
             <View style={{
