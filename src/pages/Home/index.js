@@ -142,8 +142,42 @@ export default function Home({ navigation }) {
 
 
 
+      {/* bottom nav */}
+      <View style={{
+        height: 50,
+        alignItems: 'center',
+        flexDirection: 'row',
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        backgroundColor: colors.primary,
+        justifyContent: 'space-around'
+      }}>
+        <TouchableOpacity style={{
+          padding: 10,
+        }}>
+          <Icon type='ionicon' name='home' color={colors.white} size={18} />
+          <Text style={{
+            fontFamily: fonts.secondary[400],
+            color: colors.white,
+            fontSize: 11,
+          }}>Home</Text>
+        </TouchableOpacity>
 
 
+
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('DataArtikel')
+        }} style={{
+          padding: 10,
+        }}>
+          <Icon type='ionicon' name='receipt' color={colors.white} size={18} />
+          <Text style={{
+            fontFamily: fonts.secondary[400],
+            color: colors.white,
+            fontSize: 11,
+          }}>Kegiatan</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView >
   )
 }

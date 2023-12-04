@@ -90,65 +90,66 @@ export default function SCek({ navigation, route }) {
                 <ActivityIndicator size="large" color={colors.primary} />
             </View>}
 
-            {open && <ScrollView style={{
-                flex: 1,
-            }}>
-                {anggota.map(i => {
-                    return (
-                        <View style={{
-                            margin: 5,
-                            borderBottomWidth: 1,
-                            borderBottomColor: colors.zavalabs,
-                            flexDirection: 'row'
-                        }}>
-                            <Text style={{
-                                flex: 0.5,
-                                fontFamily: fonts.secondary[400],
-                                fontSize: windowWidth / 30,
-                                color: colors.primary,
-                            }}>{i.pin} </Text>
-                            <View style={{
-                                flex: 1,
-                            }}>
-                                <Text style={{
+            {open && <FlatList data={anggota} renderItem={({ item }) => {
+                return (
+                    <View style={{
+                        borderBottomColor: colors.zavalabs,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: 10,
+                        borderBottomWidth: 1,
+                    }}>
+                        <Text style={{
+                            width: 80,
+                            fontFamily: fonts.secondary[400],
+                            fontSize: windowWidth / 30,
+                            color: colors.primary,
+                        }}>{item.pin} </Text>
 
-                                    fontFamily: fonts.secondary[600],
-                                    fontSize: windowWidth / 28,
-                                    color: colors.black,
-                                }}>{i.nama} </Text>
-                                <Text style={{
+                        <Text style={{
+                            flex: 1,
+                            paddingHorizontal: 10,
+                            fontFamily: fonts.secondary[600],
+                            fontSize: windowWidth / 28,
+                            color: colors.black,
+                        }}>{item.nama} </Text>
+                        {/* <Text style={{
 
-                                    fontFamily: fonts.secondary[600],
-                                    fontSize: windowWidth / 28,
-                                    color: colors.black,
-                                }}>{i.telepon} </Text>
-                            </View>
-                            {i.status == 'Hadir' && <View>
-                                <Text style={{
-                                    flex: 0.3,
-                                    textAlign: 'center',
-                                    fontFamily: fonts.secondary[600],
-                                    fontSize: windowWidth / 30,
-                                    color: colors.black,
-                                    paddingHorizontal: 10,
-
-
-                                    backgroundColor: colors.success
-                                }}>{i.status} </Text>
-                            </View>}
-                            {i.status != 'Hadir' && <Text style={{
-                                flex: 0.3,
-                                textAlign: 'center',
                                 fontFamily: fonts.secondary[600],
-                                fontSize: windowWidth / 30,
+                                fontSize: windowWidth / 28,
+                                color: colors.black,
+                            }}>{item.telepon} </Text> */}
 
-                                backgroundColor: colors.white
-                            }}></Text>}
+                        {item.status == 'Hadir' && <View style={{
+                            padding: 5,
+                            width: 60,
+                            borderRadius: 5,
+                            backgroundColor: colors.success
+                        }}><Text style={{
+                            flex: 0.3,
+                            textAlign: 'center',
+                            fontFamily: fonts.secondary[600],
+                            fontSize: windowWidth / 30,
+                            color: colors.white,
 
-                        </View>
-                    )
-                })}
-            </ScrollView>}
+                        }}>{item.status}</Text></View>}
+                        {item.status != 'Hadir' && <View style={{
+                            padding: 5,
+                            borderRadius: 5,
+                            width: 60,
+                            backgroundColor: colors.danger
+                        }}><Text style={{
+                            flex: 0.3,
+                            textAlign: 'center',
+                            fontFamily: fonts.secondary[600],
+                            fontSize: windowWidth / 30,
+                            color: colors.white,
+
+                        }}>Absen</Text></View>}
+
+                    </View>
+                )
+            }} />}
 
 
             <View style={{

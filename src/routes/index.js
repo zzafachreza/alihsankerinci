@@ -22,6 +22,9 @@ import {
   TimSetDetail,
   TimMulai,
   TimHasil,
+  Artikel,
+  ArtikelDetail,
+  DataArtikel,
 } from '../pages';
 import { colors } from '../utils';
 
@@ -171,6 +174,33 @@ export default function Router() {
         component={GetStarted}
         options={{
           headerShown: false,
+        }}
+      />
+
+
+      <Stack.Screen
+        name="DataArtikel"
+        component={DataArtikel}
+        options={{
+          headerShown: true,
+          headerTitle: 'Kegiatan',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: colors.white,
+        }}
+      />
+
+      <Stack.Screen
+        name="ArtikelDetail"
+        component={ArtikelDetail}
+        options={{
+          headerShown: false,
+          headerTitle: 'Kegiatan Detail',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: colors.white,
         }}
       />
 

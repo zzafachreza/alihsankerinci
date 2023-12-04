@@ -19,6 +19,10 @@ import TimSetDetail from './TimSetDetail';
 import TimMulai from './TimMulai';
 import TimHasil from './TimHasil';
 
+import ArtikelDetail from './Artikel/ArtikelDetail';
+import Artikel from './Artikel/artikel';
+import DataArtikel from './Artikel/DataArtikel';
+
 
 
 
@@ -53,5 +57,10 @@ export {
   TimSet,
   TimSetDetail,
   TimMulai,
-  TimHasil
+  TimHasil,
+
+  ArtikelDetail,
+  Artikel,
+  DataArtikel
+
 };
