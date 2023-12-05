@@ -1,7 +1,7 @@
 import { Alert, StyleSheet, Text, View, Image, FlatList } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { apiURL, getData, storeData } from '../../utils/localStorage';
+import { apiURL, apiURLNEW, getData, storeData } from '../../utils/localStorage';
 import { colors, fonts, windowHeight, windowWidth } from '../../utils';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { showMessage } from 'react-native-flash-message';
@@ -13,11 +13,13 @@ import axios from 'axios';
 import { FloatingAction } from "react-native-floating-action";
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import { TouchableWithoutFeedback } from 'react-native';
 
 export default function Home({ navigation }) {
 
   const [user, setUser] = useState({});
   const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
   const isFocused = useIsFocused();
   useEffect(() => {
     if (isFocused) {
@@ -33,6 +35,11 @@ export default function Home({ navigation }) {
         console.log(x.data);
         setData(x.data);
       })
+    });
+
+    axios.post(apiURLNEW + 'artikel').then(res => {
+      console.log(res.data)
+      setData2(res.data)
     })
   }
 
@@ -79,7 +86,10 @@ export default function Home({ navigation }) {
     })
   }
 
-
+  const [pilih, setPilih] = useState({
+    a: true,
+    b: false
+  })
 
   return (
     <SafeAreaView style={{
@@ -90,7 +100,7 @@ export default function Home({ navigation }) {
       <View style={{
         backgroundColor: colors.primary,
         paddingHorizontal: 10,
-        paddingVertical: 20,
+        paddingVertical: 10,
       }}>
 
         <View style={{
@@ -124,60 +134,107 @@ export default function Home({ navigation }) {
 
       <Image source={require('../../assets/slide.png')} style={{
         width: windowWidth,
-        height: 250,
+        height: 220,
       }} />
-      <Text style={{
-        fontFamily: fonts.secondary[600],
-        textAlign: 'center',
-        fontSize: windowWidth / 25,
-        color: colors.black,
-        marginVertical: 10,
-        marginHorizontal: 10,
-      }}>DAFTAR ACARA</Text>
-      <FlatList data={data} renderItem={__renderItem} />
-
-
-
-
-
-
-
-      {/* bottom nav */}
       <View style={{
-        height: 50,
-        alignItems: 'center',
         flexDirection: 'row',
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        backgroundColor: colors.primary,
         justifyContent: 'space-around'
       }}>
-        <TouchableOpacity style={{
-          padding: 10,
+        <TouchableWithoutFeedback onPress={() => {
+          setPilih({
+            a: true,
+            b: false
+          })
         }}>
-          <Icon type='ionicon' name='home' color={colors.white} size={18} />
-          <Text style={{
-            fontFamily: fonts.secondary[400],
-            color: colors.white,
-            fontSize: 11,
-          }}>Home</Text>
-        </TouchableOpacity>
-
-
-
-        <TouchableOpacity onPress={() => {
-          navigation.navigate('DataArtikel')
-        }} style={{
-          padding: 10,
+          <View style={{
+            flex: 1,
+            backgroundColor: pilih.a ? colors.primary : colors.white
+          }}>
+            <Text style={{
+              fontFamily: fonts.secondary[600],
+              textAlign: 'center',
+              fontSize: windowWidth / 25,
+              color: pilih.a ? colors.white : colors.black,
+              marginVertical: 10,
+              marginHorizontal: 10,
+            }}>DAFTAR ACARA</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => {
+          setPilih({
+            a: false,
+            b: true
+          })
         }}>
-          <Icon type='ionicon' name='receipt' color={colors.white} size={18} />
-          <Text style={{
-            fontFamily: fonts.secondary[400],
-            color: colors.white,
-            fontSize: 11,
-          }}>Kegiatan</Text>
-        </TouchableOpacity>
+          <View style={{
+            flex: 1,
+            backgroundColor: pilih.b ? colors.primary : colors.white
+          }}>
+            <Text style={{
+              fontFamily: fonts.secondary[600],
+              textAlign: 'center',
+              fontSize: windowWidth / 25,
+              color: pilih.b ? colors.white : colors.black,
+              marginVertical: 10,
+              marginHorizontal: 10,
+            }}>KEGIATAN</Text>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
+
+
+      {pilih.a && <FlatList data={data} renderItem={__renderItem} />}
+      {pilih.b && <View style={{
+        paddingTop: 20,
+        paddingHorizontal: 10,
+        flex: 1,
+
+      }}>
+
+        <FlatList showsVerticalScrollIndicator={false} data={data2} renderItem={({ item }) => {
+          return (
+
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('ArtikelDetail', item)}>
+              <View style={{
+                marginVertical: 10,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: colors.border,
+                overflow: 'hidden'
+              }}>
+                <Image source={{
+                  uri: item.image
+                }} style={{
+                  width: '100%',
+                  height: 200,
+                }} />
+                <View style={{
+                  padding: 10,
+                }}>
+                  <Text style={{
+                    fontFamily: fonts.secondary[600],
+                    fontSize: 16,
+                  }}>{item.judul}</Text>
+                  <Text style={{
+                    textAlign: 'right',
+                    fontFamily: fonts.secondary[400],
+                    fontSize: 16,
+                    color: colors.primary,
+                  }}>Baca selangkapnya </Text>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          )
+        }} />
+      </View>}
+
+
+
+
+
+
+
+
     </SafeAreaView >
   )
 }

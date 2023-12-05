@@ -22,7 +22,6 @@ import {
   TimSetDetail,
   TimMulai,
   TimHasil,
-  Artikel,
   ArtikelDetail,
   DataArtikel,
 } from '../pages';

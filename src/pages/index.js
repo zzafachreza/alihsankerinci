@@ -20,7 +20,6 @@ import TimMulai from './TimMulai';
 import TimHasil from './TimHasil';
 
 import ArtikelDetail from './Artikel/ArtikelDetail';
-import Artikel from './Artikel/artikel';
 import DataArtikel from './Artikel/DataArtikel';
 
 
@@ -60,7 +59,6 @@ export {
   TimHasil,
 
   ArtikelDetail,
-  Artikel,
   DataArtikel
 
 };
